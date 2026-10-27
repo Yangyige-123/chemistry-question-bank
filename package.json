@@ -1,0 +1,13 @@
+{
+  "name": "chemistry-question-bank-local",
+  "version": "0.2.3",
+  "private": true,
+  "description": "Local chemistry question selection and PDF export",
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "check": "node tools/check-resources.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

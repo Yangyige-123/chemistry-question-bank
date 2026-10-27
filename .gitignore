@@ -1,0 +1,13 @@
+node_modules/
+runtime/
+resources/
+offline/assets/
+sources/
+output/
+UserData/
+Exports/
+*.log
+.env*
+.dev.vars
+*.zip
+.DS_Store

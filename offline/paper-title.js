@@ -1,0 +1,7 @@
+/* Shared title rule for drafts and prepared unit papers. */
+(() => {
+ function dateParts(date=new Date()){const fields=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',month:'2-digit',day:'2-digit',year:'numeric'}).formatToParts(date);const f=Object.fromEntries(fields.map(x=>[x.type,x.value]));return {month:f.month,day:f.day,date:f.month+'/'+f.day,iso:f.year+'-'+f.month+'-'+f.day}}
+ function values(ids,bank,entries,date){const dd=dateParts(date),aa=ids.map(id=>entries[id]).filter(Boolean),pp=aa.map(x=>bank.papers.find(p=>p.id===x.q.paper)),chapterIds=new Set(aa.flatMap(x=>[x.a.topic,...(x.a.assessedTopics||[])].map(t=>bank.chapters.find(c=>c.subtopics.some(s=>s.id===t))?.id)).filter(x=>x!=null));const units=[...new Set(bank.chapters.filter(c=>chapterIds.has(c.id)).map(c=>c.title))],years=pp.filter(p=>!p.basicPractice&&p.year>=1900).map(p=>p.year);return {...dd,unit:units.length?units.slice(0,3).join(' + ')+(units.length>3?' + '+(units.length-3)+' more chapters':''):'Chemistry',level:[...new Set(pp.map(p=>p.stage||p.level))].join(' + '),board:[...new Set(pp.map(p=>p.curriculum||'CAIE'))].join(' + '),years:years.length?(Math.min(...years)===Math.max(...years)?String(years[0]):Math.min(...years)+'–'+Math.max(...years)):'Basic Practice',questions:new Set(aa.map(x=>x.q.id)).size}}
+ function format(ids,bank,entries,template='Practice {date} · {unit}',date){const v=values(ids,bank,entries,date);return String(template).replace(/\{(\w+)\}/g,(m,k)=>v[k]??m).trim().slice(0,250)}
+ window.ChemPaperTitle={format,dateParts};
+})();

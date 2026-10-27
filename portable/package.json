@@ -1,0 +1,7 @@
+{
+  "name": "chemistry-question-bank-portable",
+  "productName": "Chemistry Question Bank",
+  "version": "0.2.3",
+  "main": "main.cjs",
+  "private": true
+}
