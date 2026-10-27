@@ -2,20 +2,26 @@
 
 本地化学选题、混编试卷与 PDF 导出工具。界面可选择中文，知识点保留英文。
 
-## Windows 使用
+## Windows / macOS 使用
 
-1. 安装 [Git](https://git-scm.com/) 和 [Node.js LTS](https://nodejs.org/)。
+1. 安装 [Git](https://git-scm.com/) 和 [Node.js LTS](https://nodejs.org/)。macOS 的 Apple Silicon 和 Intel 均使用对应架构的 Node.js，无须 Windows EXE。
 2. 克隆公开仓库：
-   ```powershell
+   ```sh
    git clone https://github.com/Yangyige-123/chemistry-question-bank.git
    cd chemistry-question-bank
    ```
-3. 安装题库资源：从本仓库的 **Releases → resources-2026-10-27** 下载 `resource-packs.json` 和所有 `resources-*.zip` 到 `resources` 文件夹，运行：
-   ```powershell
-   powershell -NoProfile -ExecutionPolicy Bypass -File .\Install-resources.ps1
+3. 安装题库资源（首次约下载 2.82 GB，解压后约 3.97 GB，请预留至少 8 GB）：
+   ```sh
+   npm run setup
    ```
-   安装脚本可直接从公开 Release 下载资源，不需要 GitHub 账号。
-4. 双击 `Start.cmd`，或运行 `npm start` 后打开 http://127.0.0.1:4889/ 。无 npm 依赖需要安装。
+   Windows 也可双击 `Install-resources.cmd`；macOS 可在终端运行 `bash Install-resources.command`。下载中断后可重新运行，已验证的资源包会跳过，未完成的下载会尝试续传。若网络受限，也可从 Releases 下载全部九个 ZIP 和清单到 `resources/`，再运行安装脚本。
+4. 启动：
+   ```sh
+   npm start
+   ```
+   打开 http://127.0.0.1:4889/ 。Windows 可双击 `Start.cmd`，macOS 可运行 `bash Start.command`。Git 克隆会保留 `.command` 执行权限；如通过 ZIP 下载丢失权限，使用上述 `bash` 命令即可。
+
+本版本通过本机浏览器使用，无云端账号要求，无需 `npm install`。安装资源后可离线使用。macOS 的双击入口可能受系统安全提示限制，可使用终端启动；不要关闭系统安全保护。
 
 ## 更新与个人数据
 

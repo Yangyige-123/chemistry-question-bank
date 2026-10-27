@@ -5,7 +5,8 @@
   "description": "Local chemistry question selection and PDF export",
   "scripts": {
     "start": "node tools/serve.mjs",
-    "check": "node tools/check-resources.mjs"
+    "check": "node tools/check-resources.mjs",
+    "setup": "node tools/install-resources.mjs"
   },
   "engines": {
     "node": ">=20"
