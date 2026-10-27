@@ -36,7 +36,14 @@ async function main(){
  for(const pack of manifest.packs)await download(pack);
  for(const pack of manifest.packs){const file=path.join(cache,pack.name);console.log('Installing '+pack.name);
   if(process.platform==='darwin')await run('/usr/bin/ditto',['-x','-k',file,root]);
-  else {const quote=s=>"'"+s.replaceAll("'","''")+"'";await run('powershell.exe',['-NoProfile','-Command','Expand-Archive -LiteralPath '+quote(file)+' -DestinationPath '+quote(root)+' -Force']);}
+  else {
+   const quote=s=>"'"+s.replaceAll("'","''")+"'";
+   const script="$ErrorActionPreference='Stop';$null=[Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem');"+
+    '$root=[IO.Path]::GetFullPath('+quote(root)+");$prefix=$root+[IO.Path]::DirectorySeparatorChar;$zip=[IO.Compression.ZipFile]::OpenRead("+quote(file)+');'+
+    "try{foreach($entry in $zip.Entries){$target=[IO.Path]::GetFullPath([IO.Path]::Combine($root,$entry.FullName));if(-not $target.StartsWith($prefix,[StringComparison]::OrdinalIgnoreCase)){throw 'Unsafe ZIP path'};"+
+    "if($entry.FullName.EndsWith('/')){$null=[IO.Directory]::CreateDirectory($target)}else{$null=[IO.Directory]::CreateDirectory([IO.Path]::GetDirectoryName($target));[IO.Compression.ZipFileExtensions]::ExtractToFile($entry,$target,$true)}}}finally{$zip.Dispose()}";
+   await run('powershell.exe',['-NoProfile','-Command',script]);
+  }
  }
  await run(process.execPath,[path.join(root,'tools/check-resources.mjs')]);console.log('Installed. Windows: Start.cmd; macOS: Start.command');
 }
