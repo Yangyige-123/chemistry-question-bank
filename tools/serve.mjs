@@ -1,4 +1,5 @@
 import http from 'node:http';
+import {spawn} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -18,4 +19,10 @@ http.createServer((req,res)=>{
  res.setHeader('Content-Type',mime[path.extname(file)]||'application/octet-stream');res.setHeader('Content-Length',stat.size);res.setHeader('Cache-Control','no-store');
  if(req.method==='HEAD'){res.end();return;}const stream=fs.createReadStream(real);stream.on('error',()=>res.destroy());stream.pipe(res);
  });});
-}).listen(Number(process.env.CHEM_PORT||4889),'127.0.0.1',()=>console.log('Open http://127.0.0.1:'+(process.env.CHEM_PORT||4889)+'/offline/index.html'));
+ }).listen(Number(process.env.CHEM_PORT||4889),'127.0.0.1',function(){
+ const url='http://127.0.0.1:'+this.address().port+'/offline/index.html';console.log('Open '+url);
+ if(process.env.CHEM_OPEN==='1'&&process.platform==='win32'){
+  const child=spawn('powershell.exe',['-NoProfile','-Command',"Start-Process -FilePath '"+url+"'"],{windowsHide:true,stdio:'ignore'});
+  child.on('error',()=>console.log('Open the printed address in your browser.'));
+ }
+});
