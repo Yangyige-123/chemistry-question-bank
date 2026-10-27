@@ -5,7 +5,7 @@
 ## Windows 使用
 
 1. 安装 [Git](https://git-scm.com/) 和 [Node.js LTS](https://nodejs.org/)。
-2. 获得本私有仓库的访问权限，然后克隆：
+2. 克隆公开仓库：
    ```powershell
    git clone https://github.com/Yangyige-123/chemistry-question-bank.git
    cd chemistry-question-bank
@@ -14,7 +14,7 @@
    ```powershell
    powershell -NoProfile -ExecutionPolicy Bypass -File .\Install-resources.ps1
    ```
-   已安装并登录 GitHub CLI 的用户，安装脚本也可以自动下载资源。
+   安装脚本可直接从公开 Release 下载资源，不需要 GitHub 账号。
 4. 双击 `Start.cmd`，或运行 `npm start` 后打开 http://127.0.0.1:4889/ 。无 npm 依赖需要安装。
 
 ## 更新与个人数据
@@ -32,7 +32,7 @@
 
 ## 分发范围
 
-本仓库保持私有。教学资料及第三方组件的权利属于各自权利人；仓库访问权限不代表获得再次公开分发题库的许可。不要提交账号密钥、浏览器用户目录、个人试卷或导出记录。
+本仓库及 Releases 为公开分发。教学资料及第三方组件的权利属于各自权利人；仓库访问权限不代表获得再次公开分发题库的许可。不要提交账号密钥、浏览器用户目录、个人试卷或导出记录。
 
 分类状态：部分题目来自参考分类或 AI 建议，整体教师复核尚未完成。题目卡片中的状态用于区分，使用前请自行核对。
 
